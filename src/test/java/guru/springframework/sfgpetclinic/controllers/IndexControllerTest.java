@@ -11,9 +11,8 @@ import org.junit.jupiter.api.condition.JRE;
 import org.junit.jupiter.api.condition.OS;
 import static org.assertj.core.api.Assertions.*;
 
-@Tag("controller")
 @TestInstance(Lifecycle.PER_CLASS)
-class IndexControllerTest {
+class IndexControllerTest extends ControllerTest{
 
   private IndexController indexController;
 

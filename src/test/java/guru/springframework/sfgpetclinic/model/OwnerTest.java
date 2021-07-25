@@ -2,13 +2,11 @@ package guru.springframework.sfgpetclinic.model;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
-@Tag("model")
-class OwnerTest {
+class OwnerTest extends ModelTest {
 
   @DisplayName("Owner and Person properties test.")
   @Test
