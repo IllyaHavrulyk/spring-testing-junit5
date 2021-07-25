@@ -3,9 +3,14 @@ package guru.springframework.sfgpetclinic.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class OwnerTest extends ModelTest {
 
   @DisplayName("Owner and Person properties test.")
@@ -25,5 +30,12 @@ class OwnerTest extends ModelTest {
         )
     );
     assertThat(owner.getCity(), is("Petrozavodsk"));
+  }
+
+  @DisplayName("Value Source test")
+  @ParameterizedTest(name = "{displayName} - [{index}] {arguments}")
+  @ValueSource(strings = {"MY", "First", "Parameterized", "Test"})
+  void testValueSource(String val){
+    System.out.println(val);
   }
 }

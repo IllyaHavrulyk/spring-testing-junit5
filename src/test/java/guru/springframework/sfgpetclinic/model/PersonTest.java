@@ -3,6 +3,7 @@ package guru.springframework.sfgpetclinic.model;
 
 import org.junit.jupiter.api.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PersonTest extends ModelTest {
 
 
