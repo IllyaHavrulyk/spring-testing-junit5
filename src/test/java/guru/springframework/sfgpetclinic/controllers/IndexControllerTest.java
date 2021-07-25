@@ -1,13 +1,8 @@
 package guru.springframework.sfgpetclinic.controllers;
 
 import java.time.Duration;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.condition.EnabledOnJre;
@@ -16,6 +11,7 @@ import org.junit.jupiter.api.condition.JRE;
 import org.junit.jupiter.api.condition.OS;
 import static org.assertj.core.api.Assertions.*;
 
+@Tag("controller")
 @TestInstance(Lifecycle.PER_CLASS)
 class IndexControllerTest {
 
