@@ -1,8 +1,7 @@
 package guru.springframework.sfgpetclinic.model;
 
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 class PersonTest extends ModelTest {
 
@@ -16,4 +15,5 @@ class PersonTest extends ModelTest {
         () -> Assertions.assertEquals("Philipp", person.getFirstName(), "Incorrect first name.")
     );
   }
+
 }
