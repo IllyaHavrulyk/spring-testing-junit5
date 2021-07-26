@@ -15,3 +15,6 @@ For questions and help:
 * Or post in the Slack Community exclusive to the course.
 
 GitHub Issues will not be addressed.
+
+# Template:
+[![<ORG_NAME>](https://circleci.com/<VCS>/<ORG_NAME>/<PROJECT_NAME>.svg?style=svg)](<LINK>)
