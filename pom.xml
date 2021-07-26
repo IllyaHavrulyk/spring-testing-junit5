@@ -116,6 +116,9 @@
                     <argLine>
                         --illegal-access=permit
                     </argLine>
+                    <!-- groups are used to execute tests with @Tag("someval") annotations-->
+                    <!--                    <groups>models</groups>-->
+                    <!--                    <groups>controllers</groups>-->
                 </configuration>
             </plugin>
             <plugin>
