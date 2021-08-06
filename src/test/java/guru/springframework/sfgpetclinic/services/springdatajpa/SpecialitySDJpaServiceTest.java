@@ -15,6 +15,7 @@ import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -95,9 +96,9 @@ class SpecialitySDJpaServiceTest {
 
   @Test
   void testFindByIdThrows(){
-    given(specialtyRepository.findById(1L)).willThrow(new RuntimeException("boom"));
-    assertThrows(RuntimeException.class, () -> specialitySDJpaService.findById(1L));
-    then(specialtyRepository).should().findById(1L);
+    given(specialtyRepository.findById(2L)).willThrow(new RuntimeException("boom"));
+    assertThrows(RuntimeException.class, () -> specialitySDJpaService.findById(2L));
+    then(specialtyRepository).should(timeout(10).atLeastOnce()).findById(2L);
   }
 
   @Test

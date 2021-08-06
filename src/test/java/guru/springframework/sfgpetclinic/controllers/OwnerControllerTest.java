@@ -2,13 +2,23 @@ package guru.springframework.sfgpetclinic.controllers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.lenient;
 
 import guru.springframework.sfgpetclinic.fauxspring.BindingResult;
+import guru.springframework.sfgpetclinic.fauxspring.Model;
 import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.services.OwnerService;
+import java.util.ArrayList;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -28,11 +38,33 @@ class OwnerControllerTest {
   @Mock
   BindingResult bindingResult;
 
+  @Captor
+  ArgumentCaptor<String> stringArgumentCaptor;
+
+  @Mock
+  Model model;
+
+  @BeforeEach
+  void setUp(){
+    lenient().when(ownerService.findAllByLastNameLike(stringArgumentCaptor.capture())).thenAnswer(invocationOnMock -> {
+      ArrayList<Owner> owners = new ArrayList<>();
+
+      String name = invocationOnMock.getArgument(0);
+
+      if(name.equals("%Buck%")){
+        owners.add(new Owner(1L, "Joe", "Buck"));
+        return owners;
+      }
+      throw new RuntimeException("Invalid Argument");
+    });
+
+  }
+
   @Test
   void processCreationFormHasErrors() {
     //given
-    Owner owner = new Owner(1l, "Jim", "Bob");
-    given(bindingResult.hasErrors()).willReturn(true);
+    Owner owner = new Owner(1l, "Jim", "%Buck%");
+    lenient().when(bindingResult.hasErrors()).thenReturn(true);
 
     //when
     String viewName = controller.processCreationForm(owner, bindingResult);
@@ -42,10 +74,31 @@ class OwnerControllerTest {
   }
 
   @Test
+  void processFindFormWildcardString(){
+    //given
+    InOrder inOrder = inOrder(ownerService, model);
+    Owner owner = new Owner(1l, "Joe", "Buck");
+    controller.processFindForm(owner, bindingResult, model);
+    inOrder.verify(ownerService).findAllByLastNameLike(anyString());
+    inOrder.verify(model).addAttribute(anyString(), anyList());
+    assertThat("%Buck%").isEqualToIgnoringCase(stringArgumentCaptor.getValue());
+    assertThat("%Buck%").isEqualToIgnoringCase(stringArgumentCaptor.getAllValues().get(0));
+  }
+
+  @Test
+  void processFindFormWildcardStringWithCaptorAnnotation(){
+    //given
+    Owner owner = new Owner(1l, "Joe", "Buck");
+    controller.processFindForm(owner, bindingResult, null);
+    assertThat("%Buck%").isEqualToIgnoringCase(stringArgumentCaptor.getValue());
+    assertThat("%Buck%").isEqualToIgnoringCase(stringArgumentCaptor.getAllValues().get(0));
+  }
+
+  @Test
   void processCreationFormNoErrors() {
     //given
     Owner owner = new Owner(5l, "Jim", "Bob");
-    given(bindingResult.hasErrors()).willReturn(false);
+    lenient().when(bindingResult.hasErrors()).thenReturn(false);
     given(ownerService.save(any())).willReturn(owner);
 
     //when

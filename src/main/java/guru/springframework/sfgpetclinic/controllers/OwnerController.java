@@ -45,6 +45,7 @@ public class OwnerController {
         } else if (results.size() == 1) {
             // 1 owner found
             owner = results.get(0);
+            model.addAttribute("selections", results);
             return "redirect:/owners/" + owner.getId();
         } else {
             // multiple owners found
