@@ -89,7 +89,7 @@ class OwnerControllerTest {
   void processFindFormWildcardStringWithCaptorAnnotation(){
     //given
     Owner owner = new Owner(1l, "Joe", "Buck");
-    controller.processFindForm(owner, bindingResult, null);
+    controller.processFindForm(owner, bindingResult, model);
     assertThat("%Buck%").isEqualToIgnoringCase(stringArgumentCaptor.getValue());
     assertThat("%Buck%").isEqualToIgnoringCase(stringArgumentCaptor.getAllValues().get(0));
   }
